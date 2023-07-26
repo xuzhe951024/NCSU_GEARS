@@ -1,8 +1,9 @@
 # NCSU_GEARS
 
-This repository is for NCSU_GEARS summer program(Topic: Serverless).
+This repository is for the NCSU_GEARS summer program(Topic: Serverless).
 
-## Task 1 & 2
+## Tasks 1 & 2
+
 ### Distribution of Workload
 Yang: Task 1
 
@@ -12,13 +13,13 @@ Zhe: Task 2
 
 Task 1: Parse the input function chain and convert it into the desired format:
 
-We are expecting to receive a JSON formatted function chain description from the customer. A sample of such a JSON is attached with this email in the "Gears-Task1" file.
+We are expecting to receive a JSON-formatted function chain description from the customer. A sample of such a JSON is attached to this email in the "Gears-Task1" file.
 
-Unfortunately, using the input data as is, would lead to suboptimal performance since we first need to access all the entries in the top level JSON to identify the correct function. Then further nesting complicates the parsing more.
+Unfortunately, using the input data as is, would lead to suboptimal performance since we first need to access all the entries in the top-level JSON to identify the correct function. Then further nesting complicates the parsing more.
 
 Thus, the task is to convert this JSON into a format/data structure, which allows us to have a faster access to the metadata whenever needed. An example approach could be to have it converted into a hashmap with function name as the key and function data/metadata hashmap, as the value. This is just for example. You can think of other approaches also. It's just that we want to have as fast as possible access to all the function metadata.
 
-As a target, consider parsing the JSON into a format/data structure that allows O(1) access to version, timeout, isLast, next, and dependsOn fields for each function. Further, next and dependsOn should also be parsed in a way that allows O(1) access to metadata of each dependent function in the respective list.
+As a target, consider parsing the JSON into a format/data structure that allows O(1) access to version, timeout, isLast, next, and dependsOn fields for each function. Further, next and dependsOn should also be parsed to allow O(1) access to the metadata of each dependent function in the respective list.
 
 Our aim is to run this on the function chain as soon as the customer registers it, so that all the executions of the function chain would run on this faster accessible data structure.
 
@@ -26,15 +27,15 @@ Our aim is to run this on the function chain as soon as the customer registers i
 
 Task 2: Implement parallel execution of warm state handling:
 
-In our current setup, we maintain some functions in a warm state while the other functions are being executed, to ensure low cold start times. Please read about cold start times in serverless computing, if you are not already aware.
+In our current setup, we maintain some functions in a warm state while the other functions are being executed, to ensure low cold start times. If you are not already aware, please read about cold start times in serverless computing.
 
-However, in the current state of the code, when a warm function executes, we update the warm state array after the execution of the said function, which could lead to cold start problem not being solved at all.
+However, in the current state of the code, when a warm function executes, we update the warm state array after the execution of the said function, which could lead to the cold start problem not being solved at all.
 
-Therefore, the task is to use multi-threading/goroutines to enable parallel updates to the warm state queue while the current function is being executed. The point to take care of is that the warm state update thread time should be the limiting one. Thus, even if the function execution completes before warm state update, the program shall wait for the warm state update to complete.
+Therefore, the task is to use multi-threading/goroutines to enable parallel updates to the warm state queue while the current function is being executed. The point to take care of is that the warm state update thread time should be the limiting one. Thus, even if the function execution completes before the warm state update, the program shall wait for the warm state update to complete.
 
-For your reference, I have attached the relevant code snippet with this email. Kindly go through this code snippet and implement this parallel warm state update. Note that warm state updates that need to be parallelized are happening in the "RunFunction" function. There are "Todo" comments for identification of the relevant part.
+I have attached the relevant code snippet with this email for your reference. Kindly go through this code snippet and implement this parallel warm state update. Note that warm state updates that need to be parallelized are happening in the "RunFunction" function. There are "Todo" comments for identification of the relevant part.
 
-Note that some code has been removed to create this relevant code snippet. So, if any part of the code is unclear, let me know and we can discuss.
+Note that some code has been removed to create this relevant code snippet. So, if any part of the code is unclear, let me know and we can discuss it.
 
 ### How to Run:
 ```shell

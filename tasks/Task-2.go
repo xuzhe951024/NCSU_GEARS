@@ -23,6 +23,9 @@ var functionExecutionError error
 
 var mutex = &sync.Mutex{}
 
+// Event channel for triggering warm state updates
+var WarmStateUpdateChan = make(chan bool)
+
 func PrepareWarmState(funcs []string, fnMappings map[string]models.Function, nextFuncs []string) {
 	// Prepare warm state. First use the passed function list, which will be child
 	// functions of last executed parent functions. If space left, use backup BFS
@@ -55,9 +58,23 @@ func PrepareWarmState(funcs []string, fnMappings map[string]models.Function, nex
 	// get best nodes for the functions in temp array
 }
 
+// Warm state update event handler
+func WarmStateUpdateEventHandler(funcs []string, fnMappings map[string]models.Function) {
+	for range WarmStateUpdateChan {
+
+		fmt.Println(fmt.Sprintf("GoRoutineId: %s WarmStateUpdateEventHandler received event, updating warm state now...", utils.GetGoroutineID()))
+
+		mutex.Lock()
+		PrepareWarmState(funcs, fnMappings, []string{})
+		mutex.Unlock()
+	}
+}
+
 func RunFunction(fn string, fnMappings map[string]models.Function, funcs []string, resultsMap map[string]interface{}, wg *sync.WaitGroup) {
 	// Runs the input function
+	mutex.Lock()
 	val, ok := funcRunStatus[fn]
+	mutex.Unlock()
 	flag := false
 	if ok {
 		if val != "Completed" && val != "Submitted" {
@@ -67,14 +84,18 @@ func RunFunction(fn string, fnMappings map[string]models.Function, funcs []strin
 		flag = true
 	}
 	if flag {
+		mutex.Lock()
 		funcRunStatus[fn] = "Submitted"
+		mutex.Unlock()
 
 		// execute the function and get the result. If error, then break out, else update the function status and continue
 		dataString, _ := base64.StdEncoding.DecodeString(fnMappings[fn].Data)
 		fmt.Println(fmt.Sprintf("GoRoutineId: %s function: %s with parameters: %s has been well processed", utils.GetGoroutineID(), fn, string(dataString)))
 
 		resultsMap[fn] = "processed"
+		mutex.Lock()
 		funcRunStatus[fn] = "Completed"
+		mutex.Unlock()
 		// If executed function was in warm state, clear up its slot.
 		// Finished: Need to run this in parallel with the execution.
 
@@ -104,31 +125,23 @@ func RunFunction(fn string, fnMappings map[string]models.Function, funcs []strin
 		potentialRunnables := []string{}
 		for _, nextFunc := range nextFuncs {
 			// Check if all dependencies of the next function have been completed.
-			dependsOn := fnMappings[nextFunc].DependsOn
+			dependsOn := fnMappings[nextFunc.Name].DependsOn
 			allDependenciesCompleted := true
 			for _, dependency := range dependsOn {
-				if funcRunStatus[dependency] != "Completed" {
+				mutex.Lock()
+				if funcRunStatus[dependency.Name] != "Completed" {
 					allDependenciesCompleted = false
+				}
+				mutex.Unlock()
+				if !allDependenciesCompleted {
 					break
 				}
 			}
 			// If all dependencies of the next function have been completed, then the next function is a potential runnable function.
 			if allDependenciesCompleted {
-				potentialRunnables = append(potentialRunnables, nextFunc)
+				potentialRunnables = append(potentialRunnables, nextFunc.Name)
 			}
 		}
-
-		// Finished: Explore doing this parallely with the function execution.
-		wgWarmState.Add(1)
-		go func() {
-			defer wgWarmState.Done()
-			mutex.Lock()
-			PrepareWarmState(funcs, fnMappings, potentialRunnables)
-			mutex.Unlock()
-		}()
-
-		// Wait for finishing updating of warm state
-		wgWarmState.Wait()
 
 		// If any new warm state function is runnable, add it to the list of potential runnables
 		// For non-warm state functions, find the best nodes

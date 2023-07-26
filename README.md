@@ -49,75 +49,72 @@ functionsIter: 0
 ```
 #### Experiment Results:
 ```shell
-GoRoutineId: 1 Current fns: [f1 f2]
-GoRoutineId: 6 function: f1 with parameters: data0 has been well processed
-GoRoutineId: 8 Current fns: [f1 f2]
-GoRoutineId: 19 function:  with parameters:  has been well processed
-GoRoutineId: 21 Current fns: [f2 f3]
-GoRoutineId: 1 Result for function: map[:processed f1:processed]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
+GoRoutineId: 18 Current fns: [f1 f2]
+GoRoutineId: 29 Current fns: [f1 f2]
+GoRoutineId: 5 function: f11 with parameters: data10 has been well processed
+GoRoutineId: 29 Result for function: map[f11:processed]
 
-GoRoutineId: 1 Current fns: [f2 f3]
-GoRoutineId: 33 function: f2 with parameters: data1 has been well processed
-GoRoutineId: 35 Current fns: [f2 f3]
-GoRoutineId: 1 Result for function: map[f2:processed]
+GoRoutineId: 22 Current fns: [f1 f2]
+GoRoutineId: 32 function: f4 with parameters: data3 has been well processed
+GoRoutineId: 22 Result for function: map[f4:processed]
 
-GoRoutineId: 1 Current fns: [f3 f4]
-GoRoutineId: 42 function: f3 with parameters: data2 has been well processed
-GoRoutineId: 44 Current fns: [f3 f4]
-GoRoutineId: 1 Result for function: map[f3:processed]
+GoRoutineId: 28 Current fns: [f1 f2]
+GoRoutineId: 7 function: f10 with parameters: data9 has been well processed
+GoRoutineId: 28 Result for function: map[f10:processed]
 
-GoRoutineId: 1 Current fns: [f4 f5]
-GoRoutineId: 15 function: f4 with parameters: data3 has been well processed
-GoRoutineId: 49 Current fns: [f4 f5]
-GoRoutineId: 1 Result for function: map[f4:processed]
+GoRoutineId: 26 Current fns: [f1 f2]
+GoRoutineId: 34 function: f8 with parameters: data7 has been well processed
+GoRoutineId: 26 Result for function: map[f8:processed]
 
-GoRoutineId: 1 Current fns: [f5 f6]
-GoRoutineId: 67 function: f5 with parameters: data4 has been well processed
-GoRoutineId: 69 Current fns: [f5 f6]
-GoRoutineId: 1 Result for function: map[f5:processed]
+GoRoutineId: 27 Current fns: [f1 f2]
+GoRoutineId: 9 function: f9 with parameters: data8 has been well processed
+GoRoutineId: 11 function: f13 with parameters:  has been well processed
+GoRoutineId: 27 Result for function: map[f13:processed f9:processed]
 
-GoRoutineId: 1 Current fns: [f6 f7]
-GoRoutineId: 23 function: f6 with parameters: data5 has been well processed
-GoRoutineId: 25 Current fns: [f6 f7]
-GoRoutineId: 1 Result for function: map[f6:processed]
+GoRoutineId: 31 Current fns: [f1 f2]
+GoRoutineId: 31 Result for function: map[]
 
-GoRoutineId: 1 Current fns: [f7 f8]
-GoRoutineId: 71 function: f7 with parameters: data6 has been well processed
-GoRoutineId: 73 Current fns: [f7 f8]
-GoRoutineId: 1 Result for function: map[f7:processed]
+GoRoutineId: 19 Current fns: [f1 f2]
+GoRoutineId: 37 function: f1 with parameters: data0 has been well processed
+GoRoutineId: 39 function: f2 with parameters:  has been well processed
+GoRoutineId: 40 function: f3 with parameters:  has been well processed
+GoRoutineId: 14 function: f5 with parameters:  has been well processed
+GoRoutineId: 15 function: f6 with parameters:  has been well processed
+GoRoutineId: 16 function: f7 with parameters:  has been well processed
+GoRoutineId: 66 function: f12 with parameters:  has been well processed
+GoRoutineId: 19 Result for function: map[f1:processed f12:processed f2:processed f3:processed f5:processed f6:processed f7:processed]
 
-GoRoutineId: 1 Current fns: [f8 f9]
-GoRoutineId: 51 function: f8 with parameters: data7 has been well processed
-GoRoutineId: 53 Current fns: [f8 f9]
-GoRoutineId: 1 Result for function: map[f8:processed]
-
-GoRoutineId: 1 Current fns: [f9 f10]
-GoRoutineId: 55 function: f9 with parameters: data8 has been well processed
-GoRoutineId: 57 Current fns: [f9 f10]
-GoRoutineId: 1 Result for function: map[f9:processed]
-
-GoRoutineId: 1 Current fns: [f10 f11]
-GoRoutineId: 59 function: f10 with parameters: data9 has been well processed
-GoRoutineId: 61 Current fns: [f10 f11]
-GoRoutineId: 1 Result for function: map[f10:processed]
-
-GoRoutineId: 1 Current fns: [f11 f12]
-GoRoutineId: 75 function: f11 with parameters: data10 has been well processed
-GoRoutineId: 77 Current fns: [f11 f12]
-GoRoutineId: 1 Result for function: map[f11:processed]
-
-GoRoutineId: 1 Current fns: [f12 f13]
-GoRoutineId: 26 function: f12 with parameters: data11 has been well processed
-GoRoutineId: 28 Current fns: [f12 f13]
-GoRoutineId: 1 Result for function: map[f12:processed]
-
-GoRoutineId: 1 Current fns: [f13]
-GoRoutineId: 78 function: f13 with parameters: data12 has been well processed
-GoRoutineId: 80 Current fns: [f13]
-GoRoutineId: 1 Result for function: map[f13:processe
 ```
 #### Explanation
 1. The json strings were mapped to "map[string]models.function" and kept O(1) access to the metadata.
-2. For each call to "ScheduleFunctionOnNode()", the main GoRoutine(GoRoutineId: 1) will wait for the user function GoRoutine and warm state update GoRoutine.
-3. Use mutex lock to remain thread-safe: Could be switched to read-write lock if reading is significantly larger than writing.
+2. [UPDATED IN V2]"dependsOn" and "next" fields has been modified to "map[string]models.function" to remain O(1) access instead of traversing all the json again.
+3. For each call to "ScheduleFunctionOnNode()", the main GoRoutine(GoRoutineId: 1) will wait for the user function GoRoutine and warm state update GoRoutine.
+4. Use mutex lock to remain thread-safe: Could be switched to read-write lock if reading is significantly larger than writing.
+5. [UPDATED IN V2] Add a WarmStateUpdateEventHandler to maintain warm state once a request(event) comes.
+6. [UPDATED IN V2] Update test code to simulate concurrency scenarios.
 

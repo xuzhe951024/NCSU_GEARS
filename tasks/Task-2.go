@@ -54,7 +54,7 @@ func PrepareWarmState(funcs []string, fnMappings map[string]models.Function, nex
 	}
 	functionsIter = localIter
 	warmFunctions = append(warmFunctions, temp...)
-	fmt.Println(fmt.Sprintf("GoRoutineId: %s Current fns: %v", utils.GetGoroutineID(), warmFunctions))
+	//fmt.Println(fmt.Sprintf("GoRoutineId: %s Current fns: %v", utils.GetGoroutineID(), warmFunctions))
 	// get best nodes for the functions in temp array
 }
 
@@ -68,6 +68,7 @@ func WarmStateUpdateEventHandler(funcs []string, fnMappings map[string]models.Fu
 		PrepareWarmState(funcs, fnMappings, []string{})
 		mutex.Unlock()
 	}
+
 }
 
 func RunFunction(fn string, fnMappings map[string]models.Function, funcs []string, resultsMap map[string]interface{}, wg *sync.WaitGroup) {

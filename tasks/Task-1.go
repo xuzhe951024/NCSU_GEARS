@@ -68,8 +68,8 @@ func convertToFunction(functions []models.UnparsedFunction) map[string]models.Fu
 		function := models.Function{
 			Name:            unparsedFunction.Name,
 			Version:         unparsedFunction.Version,
-			DependsOn:       make(map[string]models.Function),
-			Next:            make(map[string]models.Function),
+			DependsOn:       make(map[string]models.FunctionIndex),
+			Next:            make(map[string]struct{ Name string }),
 			Timeout:         unparsedFunction.Timeout,
 			IsLast:          unparsedFunction.IsLast,
 			BreakConditions: unparsedFunction.BreakConditions,
@@ -84,14 +84,14 @@ func convertToFunction(functions []models.UnparsedFunction) map[string]models.Fu
 		function := fnMappings[unparsedFunction.Name]
 
 		for _, dep := range unparsedFunction.DependsOn {
-			if depFn, ok := fnMappings[dep.Name]; ok {
-				fnMappings[unparsedFunction.Name].DependsOn[dep.Name] = depFn
+			if _, ok := fnMappings[dep.Name]; ok {
+				fnMappings[unparsedFunction.Name].DependsOn[dep.Name] = dep
 			}
 		}
 
 		for _, next := range unparsedFunction.Next {
-			if nextFn, ok := fnMappings[next.Name]; ok {
-				fnMappings[unparsedFunction.Name].Next[next.Name] = nextFn
+			if _, ok := fnMappings[next.Name]; ok {
+				fnMappings[unparsedFunction.Name].Next[next.Name] = struct{ Name string }{Name: next.Name}
 			}
 		}
 

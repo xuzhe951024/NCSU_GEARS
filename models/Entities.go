@@ -3,8 +3,8 @@ package models
 type Function struct {
 	Name            string
 	Version         string
-	DependsOn       map[string]Function
-	Next            map[string]Function
+	DependsOn       map[string]FunctionIndex
+	Next            map[string]struct{ Name string }
 	Timeout         string
 	IsLast          bool
 	BreakConditions []Condition
@@ -13,15 +13,23 @@ type Function struct {
 }
 
 type UnparsedFunction struct {
-	Name            string
-	Version         string
-	DependsOn       []struct{ Name string }
-	Next            []struct{ Name string }
+	Name      string
+	Version   string
+	DependsOn []FunctionIndex
+	Next      []struct {
+		Name string `json:"name"`
+	}
 	Timeout         string
 	IsLast          bool
 	BreakConditions []Condition
 	Data            string
 	IsWarm          bool
+}
+
+type FunctionIndex struct {
+	Name      string      `json:"name"`
+	Required  bool        `json:"required"`
+	Condition []Condition `json:"condition"`
 }
 
 type Condition struct {

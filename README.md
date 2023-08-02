@@ -119,3 +119,53 @@ GoRoutineId: 19 Result for function: map[f1:processed f12:processed f2:processed
 5. [UPDATED IN V2] Add a WarmStateUpdateEventHandler to maintain warm state once a request(event) comes.
 6. [UPDATED IN V2] Update test code to simulate concurrency scenarios.
 
+## Task: Rest-api
+
+### Distribution of Workload
+Yang: Task 1
+1. Organize rest-api functions
+2. Finish the code for controller and service 
+
+Zhe: Task 2
+1. Improve json conversion tools
+2. Design code functional structure
+3. Finish unit test for rest-api
+
+### Tasks Description:
+Task: Develop a module that exposes an API which would be used by the user to register a function chain with the platform. The specifications of the API is as follows:
+
+Type: Preferably REST API
+Protocol: HTTP(s) (HTTPS would need SSL certificate, so you can use HTTP for now, we'll extend it later to include HTTPS)
+Method: POST
+Path: /registerFunctionChain
+Data: The JSON sample shared earlier
+Response: 200 OK if the input is valid JSON as per our requirements (schema), else a 400 Bad Request.
+
+### How to Run:
+```shell
+# Make sure port 8080 is available, or modify it in ${APPROOT}/resources/application.yaml
+cd ${APPROOT}/tests
+./autoRunRestApiTest.sh
+```
+
+### Result & Explanation
+#### Experiment Configurations:
+```yaml
+port: 8080
+```
+
+#### Experiment Results:
+```shell
+INFO[0000] starting serving on port: :8080              
+INFO[0000] Response status:200 OK                       
+INFO[0000] Response body:"fc1"
+PASS
+ok      NCSU_Gears/tests        0.022s
+```
+
+#### Explanation
+1. Server Start-Up: In the RegisterFunctionChainController function, a new Gorilla Mux router is created and the registerFunctionChainHandler is registered as the handler for POST requests. An HTTP server is then initiated to listen on a specified port and handle requests with the created router. 
+2. Request Handling: In the registerFunctionChainHandler function, the request body is read and parsed into the RegisterFunctionChainVO structure. The parsed data is then processed by the ParseJsonToMaps function and the results are stored in the global RegisteredFunctionChainsMap. 
+3. Response Sending: If the processing is successful, the registerFunctionChainHandler function sets the HTTP status code to 200 and returns the identifier of the processed result. 
+4. Request Sending: A new POST request is created, with the body being data read from a JSON file. This request is then sent using an HTTP client. 
+5. Response Checking: The status and body of the response are read, and the status is checked to be "200 OK" using the assert function from Testify.

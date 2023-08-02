@@ -41,3 +41,8 @@ type Condition struct {
 type Podresult struct {
 	ResultsMap map[string]interface{}
 }
+
+type RegisterFunctionChainVO struct {
+	Identifier string
+	Functions  []UnparsedFunction
+}

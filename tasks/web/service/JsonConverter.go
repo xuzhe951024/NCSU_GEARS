@@ -1,14 +1,15 @@
-package tasks
+package service
 
 import (
 	"NCSU_Gears/models"
 	"encoding/json"
+	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"log"
 	"os"
 )
 
-func parseJSON(pathToJson string) map[string][]models.UnparsedFunction {
+func parseJSON(pathToJson string) models.RegisterFunctionChainVO {
 	jsonFile, err := os.Open(pathToJson)
 	if err != nil {
 		log.Fatal(err)
@@ -17,8 +18,12 @@ func parseJSON(pathToJson string) map[string][]models.UnparsedFunction {
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	var result map[string][]models.UnparsedFunction
-	json.Unmarshal(byteValue, &result)
+	var result models.RegisterFunctionChainVO
+	err = json.Unmarshal(byteValue, &result)
+	if err != nil {
+		logrus.Error("Unmarshal jason failed: ", err)
+		return models.RegisterFunctionChainVO{}
+	}
 
 	return result
 }
@@ -101,22 +106,26 @@ func convertToFunction(functions []models.UnparsedFunction) map[string]models.Fu
 	return fnMappings
 }
 
-func JsonToMaps(pathToJson string) (map[string]models.Function, []string) {
-	result := parseJSON(pathToJson)
-
-	funcs := make([]string, len(result["functions"]))
+func ParseJsonToMaps(unparsedFunctions models.RegisterFunctionChainVO) (map[string]models.Function, []string) {
+	funcs := make([]string, len(unparsedFunctions.Functions))
 	unparsedFnMappings := make(map[string]models.UnparsedFunction)
 
-	for i, function := range result["functions"] {
+	for i, function := range unparsedFunctions.Functions {
 		funcs[i] = function.Name
 		unparsedFnMappings[function.Name] = function
 	}
 
-	if detectCycle(result["functions"]) {
+	if detectCycle(unparsedFunctions.Functions) {
 		log.Fatal("Detected a cycle in the function graph.")
 	}
 
-	fnMappings := convertToFunction(result["functions"])
+	fnMappings := convertToFunction(unparsedFunctions.Functions)
 
 	return fnMappings, funcs
+}
+
+func JsonToMaps(pathToJson string) (map[string]models.Function, []string) {
+	result := parseJSON(pathToJson)
+
+	return ParseJsonToMaps(result)
 }

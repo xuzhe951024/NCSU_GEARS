@@ -1,10 +1,11 @@
-package tasks
+package service
 
 import (
+	"NCSU_Gears/common/utils"
 	"NCSU_Gears/models"
-	"NCSU_Gears/utils"
 	"encoding/base64"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"sync"
 )
 
@@ -54,7 +55,7 @@ func PrepareWarmState(funcs []string, fnMappings map[string]models.Function, nex
 	}
 	functionsIter = localIter
 	warmFunctions = append(warmFunctions, temp...)
-	//fmt.Println(fmt.Sprintf("GoRoutineId: %s Current fns: %v", utils.GetGoroutineID(), warmFunctions))
+	//logrus.Info(fmt.Sprintf("GoRoutineId: %s Current fns: %v", utils.GetGoroutineID(), warmFunctions))
 	// get best nodes for the functions in temp array
 }
 
@@ -62,7 +63,7 @@ func PrepareWarmState(funcs []string, fnMappings map[string]models.Function, nex
 func WarmStateUpdateEventHandler(funcs []string, fnMappings map[string]models.Function) {
 	for range WarmStateUpdateChan {
 
-		fmt.Println(fmt.Sprintf("GoRoutineId: %s WarmStateUpdateEventHandler received event, updating warm state now...", utils.GetGoroutineID()))
+		logrus.Info(fmt.Sprintf("GoRoutineId: %s WarmStateUpdateEventHandler received event, updating warm state now...", utils.GetGoroutineID()))
 
 		mutex.Lock()
 		PrepareWarmState(funcs, fnMappings, []string{})
@@ -91,7 +92,7 @@ func RunFunction(fn string, fnMappings map[string]models.Function, funcs []strin
 
 		// execute the function and get the result. If error, then break out, else update the function status and continue
 		dataString, _ := base64.StdEncoding.DecodeString(fnMappings[fn].Data)
-		fmt.Println(fmt.Sprintf("GoRoutineId: %s function: %s with parameters: %s has been well processed", utils.GetGoroutineID(), fn, string(dataString)))
+		logrus.Info(fmt.Sprintf("GoRoutineId: %s function: %s with parameters: %s has been well processed", utils.GetGoroutineID(), fn, string(dataString)))
 
 		resultsMap[fn] = "processed"
 		mutex.Lock()

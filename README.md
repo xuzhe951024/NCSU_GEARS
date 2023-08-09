@@ -50,66 +50,48 @@ functionsIter: 0
 ```
 #### Experiment Results:
 ```shell
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 18 WarmStateUpdateEventHandler received event, updating warm state now...
-GoRoutineId: 18 Current fns: [f1 f2]
-GoRoutineId: 29 Current fns: [f1 f2]
-GoRoutineId: 5 function: f11 with parameters: data10 has been well processed
-GoRoutineId: 29 Result for function: map[f11:processed]
-
-GoRoutineId: 22 Current fns: [f1 f2]
-GoRoutineId: 32 function: f4 with parameters: data3 has been well processed
-GoRoutineId: 22 Result for function: map[f4:processed]
-
-GoRoutineId: 28 Current fns: [f1 f2]
-GoRoutineId: 7 function: f10 with parameters: data9 has been well processed
-GoRoutineId: 28 Result for function: map[f10:processed]
-
-GoRoutineId: 26 Current fns: [f1 f2]
-GoRoutineId: 34 function: f8 with parameters: data7 has been well processed
-GoRoutineId: 26 Result for function: map[f8:processed]
-
-GoRoutineId: 27 Current fns: [f1 f2]
-GoRoutineId: 9 function: f9 with parameters: data8 has been well processed
-GoRoutineId: 11 function: f13 with parameters:  has been well processed
-GoRoutineId: 27 Result for function: map[f13:processed f9:processed]
-
-GoRoutineId: 31 Current fns: [f1 f2]
-GoRoutineId: 31 Result for function: map[]
-
-GoRoutineId: 19 Current fns: [f1 f2]
-GoRoutineId: 37 function: f1 with parameters: data0 has been well processed
-GoRoutineId: 39 function: f2 with parameters:  has been well processed
-GoRoutineId: 40 function: f3 with parameters:  has been well processed
-GoRoutineId: 14 function: f5 with parameters:  has been well processed
-GoRoutineId: 15 function: f6 with parameters:  has been well processed
-GoRoutineId: 16 function: f7 with parameters:  has been well processed
-GoRoutineId: 66 function: f12 with parameters:  has been well processed
-GoRoutineId: 19 Result for function: map[f1:processed f12:processed f2:processed f3:processed f5:processed f6:processed f7:processed]
-
+=== RUN   TestForTask1And2
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 34 function: f8 with parameters: data7 has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 34 Result for function: map[f8:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 50 function: f4 with parameters: data3 has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 50 Result for function: map[f4:processed f8:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 66 function: f10 with parameters: data9 has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 66 Result for function: map[f10:processed f4:processed f8:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 36 function: f11 with parameters: data10 has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 36 Result for function: map[f10:processed f11:processed f4:processed f8:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 37 function: f1 with parameters: data0 has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 37 Result for function: map[f1:processed f10:processed f11:processed f4:processed f8:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 39 function: f2 with parameters:  has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 39 Result for function: map[f1:processed f10:processed f11:processed f2:processed f4:processed f8:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 40 function: f3 with parameters:  has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 40 Result for function: map[f1:processed f10:processed f11:processed f2:processed f3:processed f4:processed f8:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 69 function: f7 with parameters:  has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 69 Result for function: map[f1:processed f10:processed f11:processed f2:processed f3:processed f4:processed f7:processed f8:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 71 function: f9 with parameters:  has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 71 Result for function: map[f1:processed f10:processed f11:processed f2:processed f3:processed f4:processed f7:processed f8:processed f9:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 74 function: f6 with parameters:  has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 73 function: f5 with parameters:  has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 74 Result for function: map[f1:processed f10:processed f11:processed f2:processed f3:processed f4:processed f6:processed f7:processed f8:processed f9:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 73 Result for function: map[f1:processed f10:processed f11:processed f2:processed f3:processed f4:processed f5:processed f6:processed f7:processed f8:processed f9:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 54 function: f12 with parameters:  has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 54 Result for function: map[f1:processed f10:processed f11:processed f12:processed f2:processed f3:processed f4:processed f5:processed f6:processed f7:processed f8:processed f9:processed]\n"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 7 WarmStateUpdateEventHandler received event, updating warm state now..."
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 76 function: f13 with parameters:  has been well processed"
+time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 76 Result for function: map[f1:processed f10:processed f11:processed f12:processed f13:processed f2:processed f3:processed f4:processed f5:processed f6:processed f7:processed f8:processed f9:processed]\n"
+--- PASS: TestForTask1And2 (1.00s)
+PASS
 ```
 #### Explanation
 1. The json strings were mapped to "map[string]models.function" and kept O(1) access to the metadata.
@@ -151,16 +133,16 @@ cd ${APPROOT}/tests
 ### Result & Explanation
 #### Experiment Configurations:
 ```yaml
-port: 8080
+port: 8443
 ```
 
 #### Experiment Results:
 ```shell
-INFO[0000] starting serving on port: :8080              
+INFO[0000] starting serving on port: :8443              
 INFO[0000] Response status:200 OK                       
-INFO[0000] Response body:"fc1"
+INFO[0000] Response body:"fc1"                          
 PASS
-ok      NCSU_Gears/tests        0.022s
+ok      NCSU_Gears/tests        0.033s
 ```
 
 #### Explanation
@@ -169,3 +151,4 @@ ok      NCSU_Gears/tests        0.022s
 3. Response Sending: If the processing is successful, the registerFunctionChainHandler function sets the HTTP status code to 200 and returns the identifier of the processed result. 
 4. Request Sending: A new POST request is created, with the body being data read from a JSON file. This request is then sent using an HTTP client. 
 5. Response Checking: The status and body of the response are read, and the status is checked to be "200 OK" using the assert function from Testify.
+6. Self-issued certification for https is enabled.

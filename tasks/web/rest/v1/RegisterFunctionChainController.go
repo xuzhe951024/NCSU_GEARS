@@ -51,7 +51,8 @@ func RegisterFunctionChainController(port string) {
 	router := mux.NewRouter()
 	router.HandleFunc(constants.URI_V1_REGISTER_FUNCTION_CHAIN, registerFunctionChainHandler).Methods(constants.REQUEST_METHOD_POST)
 	logrus.Info("starting serving on port: " + port)
-	err := http.ListenAndServe(port, router)
+	//err := http.ListenAndServe(port, router)
+	err := http.ListenAndServeTLS(port, "server.crt", "server.key", router)
 	if err != nil {
 		logrus.Error(err)
 		return

@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"NCSU_Gears/common/utils"
 	"NCSU_Gears/tasks/web/service"
 	"fmt"
 	"math/rand"
@@ -23,19 +22,16 @@ func TestForTask1And2(t *testing.T) {
 		go func(i int, functionName string) {
 			defer wg.Done()
 
-			// Generate event
-			service.WarmStateUpdateChan <- true
-
 			// Random delay
 			delay := time.Duration(rand.Intn(1000)) * time.Millisecond
 			time.Sleep(delay)
 
-			res, err := service.ScheduleFunctionOnNode(functionName, fmt.Sprintf("data%d", i), fnMappings, funcs)
+			_, err := service.ScheduleFunctionOnNode(functionName, fmt.Sprintf("data%d", i), fnMappings, funcs)
 			if err != nil {
 				t.Error(fmt.Sprintf("Error scheduling function: %s", err))
 				return
 			}
-			t.Log(fmt.Sprintf("GoRoutineId: %s Result for function: %v\n", utils.GetGoroutineID(), res.ResultsMap))
+
 		}(i, functionName)
 	}
 

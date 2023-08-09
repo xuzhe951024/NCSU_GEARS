@@ -16,4 +16,5 @@ const (
 	RESOURCES_PATH          = "./resources"
 	CONFIG_FILE_TYPE        = "yaml"
 	PORT_CONFIG_NAME        = "port"
+	CONTANT_TYPE_JSON       = "application/json"
 )

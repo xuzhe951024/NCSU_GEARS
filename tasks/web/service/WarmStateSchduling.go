@@ -12,8 +12,10 @@ import (
 // Maintain status of each identified function
 var funcRunStatus = map[string]string{}
 
+var resultsMap = make(map[string]interface{})
+
 // Maximum number of warm state functions
-var numParallel = 2
+var numParallel = 5
 
 // Warm state functions
 var warmFunctions = []string{}
@@ -72,7 +74,7 @@ func WarmStateUpdateEventHandler(funcs []string, fnMappings map[string]models.Fu
 
 }
 
-func RunFunction(fn string, fnMappings map[string]models.Function, funcs []string, resultsMap map[string]interface{}, wg *sync.WaitGroup) {
+func RunFunction(fn string, fnMappings map[string]models.Function, funcs []string, wg *sync.WaitGroup) {
 	// Runs the input function
 	mutex.Lock()
 	val, ok := funcRunStatus[fn]
@@ -91,13 +93,16 @@ func RunFunction(fn string, fnMappings map[string]models.Function, funcs []strin
 		mutex.Unlock()
 
 		// execute the function and get the result. If error, then break out, else update the function status and continue
+		// Generate event
+		WarmStateUpdateChan <- true
 		dataString, _ := base64.StdEncoding.DecodeString(fnMappings[fn].Data)
 		logrus.Info(fmt.Sprintf("GoRoutineId: %s function: %s with parameters: %s has been well processed", utils.GetGoroutineID(), fn, string(dataString)))
 
-		resultsMap[fn] = "processed"
 		mutex.Lock()
+		resultsMap[fn] = "processed"
 		funcRunStatus[fn] = "Completed"
 		mutex.Unlock()
+		logrus.Info(fmt.Sprintf("GoRoutineId: %s Result for function: %v\n", utils.GetGoroutineID(), resultsMap))
 		// If executed function was in warm state, clear up its slot.
 		// Finished: Need to run this in parallel with the execution.
 
@@ -153,7 +158,7 @@ func RunFunction(fn string, fnMappings map[string]models.Function, funcs []strin
 			wgRecursive.Add(1)
 			go func(fn string, fnMappings map[string]models.Function, funcs []string, resultsMap map[string]interface{}) {
 				defer wgRecursive.Done()
-				RunFunction(fn, fnMappings, funcs, resultsMap, &wgRecursive)
+				RunFunction(fn, fnMappings, funcs, &wgRecursive)
 				if functionExecutionError != nil {
 					return
 				}
@@ -176,8 +181,9 @@ func ScheduleFunctionOnNode(functionName string, data string, fnMappings map[str
 	//	}
 	// funcs is an array of all functions in the function chain
 	// resultsMap is a placeholder for results
+
 	res := models.Podresult{}
-	res.ResultsMap = make(map[string]interface{})
+	res.ResultsMap = resultsMap
 	// Prepare initial warm state
 	PrepareWarmState(funcs, fnMappings, []string{})
 	data = base64.StdEncoding.EncodeToString([]byte(data))
@@ -190,7 +196,7 @@ func ScheduleFunctionOnNode(functionName string, data string, fnMappings map[str
 	go func() {
 		defer wg.Done()
 		functionExecutionError = nil
-		RunFunction(functionName, fnMappings, funcs, res.ResultsMap, &wg)
+		RunFunction(functionName, fnMappings, funcs, &wg)
 	}()
 	wg.Wait()
 	return &res, nil

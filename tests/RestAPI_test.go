@@ -2,6 +2,7 @@ package tests
 
 import (
 	"NCSU_Gears/common/constants"
+	"crypto/tls"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -30,18 +31,19 @@ func TestRegisterFunctionChain(t *testing.T) {
 	}
 	defer jsonFile.Close()
 
-	req, err := http.NewRequest(constants.REQUEST_METHOD_POST,
-		fmt.Sprintf("http://localhost:%v%s", port, constants.URI_V1_REGISTER_FUNCTION_CHAIN),
+	transport := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
+	client := &http.Client{Transport: transport}
+
+	resp, err := client.Post(fmt.Sprintf("https://localhost:%v%s", port, constants.URI_V1_REGISTER_FUNCTION_CHAIN),
+		constants.CONTANT_TYPE_JSON,
 		jsonFile)
 	if err != nil {
 		t.Fatalf("Error creating request: %v", err)
 	}
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		t.Fatalf("Error sending request: %v", err)
-	}
 	defer resp.Body.Close()
 
 	logrus.Info("Response status:", resp.Status)

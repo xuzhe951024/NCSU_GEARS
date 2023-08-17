@@ -19,5 +19,12 @@ func main() {
 	}
 
 	port := viper.Get(constants.PORT_CONFIG_NAME)
-	v1.RegisterFunctionChainController(fmt.Sprintf(":%v", port))
+	webFramework := viper.Get(constants.WEB_FRAMEWORK)
+
+	if webFramework == constants.GORILLA {
+		v1.RegisterGorillaFunctionChainController(fmt.Sprintf(":%v", port))
+	} else {
+		v1.RegisterEchoFunctionChainController(fmt.Sprintf(":%v", port))
+	}
+
 }

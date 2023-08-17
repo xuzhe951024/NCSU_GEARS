@@ -1,6 +1,7 @@
 package service
 
 import (
+	"NCSU_Gears/common/constants"
 	"NCSU_Gears/common/utils"
 	"NCSU_Gears/models"
 	"encoding/base64"
@@ -74,6 +75,13 @@ func WarmStateUpdateEventHandler(funcs []string, fnMappings map[string]models.Fu
 
 }
 
+func functionExecution(functionData string, functionName string) {
+	functionExecutingString := fmt.Sprintf("GoRoutineId: %s function: %s with parameters: %s has been well processed", utils.GetGoroutineID(), functionName, string(functionData))
+	functionExecutingString = constants.FUNCTION_EXCUTION_LOG_PREFIX + functionExecutingString + constants.FUNCTION_EXCUTION_LOG_SURFIX
+
+	logrus.Info(functionExecutingString)
+}
+
 func RunFunction(fn string, fnMappings map[string]models.Function, funcs []string, wg *sync.WaitGroup) {
 	// Runs the input function
 	mutex.Lock()
@@ -94,15 +102,15 @@ func RunFunction(fn string, fnMappings map[string]models.Function, funcs []strin
 
 		// execute the function and get the result. If error, then break out, else update the function status and continue
 		// Generate event
-		WarmStateUpdateChan <- true
 		dataString, _ := base64.StdEncoding.DecodeString(fnMappings[fn].Data)
-		logrus.Info(fmt.Sprintf("GoRoutineId: %s function: %s with parameters: %s has been well processed", utils.GetGoroutineID(), fn, string(dataString)))
+		WarmStateUpdateChan <- true
+		go functionExecution(string(dataString), fn)
 
 		mutex.Lock()
 		resultsMap[fn] = "processed"
 		funcRunStatus[fn] = "Completed"
 		mutex.Unlock()
-		logrus.Info(fmt.Sprintf("GoRoutineId: %s Result for function: %v\n", utils.GetGoroutineID(), resultsMap))
+		logrus.Info(fmt.Sprintf("GoRoutineId: %s Result for function: %v", utils.GetGoroutineID(), resultsMap))
 		// If executed function was in warm state, clear up its slot.
 		// Finished: Need to run this in parallel with the execution.
 

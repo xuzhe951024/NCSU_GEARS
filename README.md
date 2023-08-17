@@ -146,9 +146,9 @@ ok      NCSU_Gears/tests        0.033s
 ```
 
 #### Explanation
-1. Server Start-Up: In the RegisterFunctionChainController function, a new Gorilla Mux router is created and the registerFunctionChainHandler is registered as the handler for POST requests. An HTTP server is then initiated to listen on a specified port and handle requests with the created router. 
-2. Request Handling: In the registerFunctionChainHandler function, the request body is read and parsed into the RegisterFunctionChainVO structure. The parsed data is then processed by the ParseJsonToMaps function and the results are stored in the global RegisteredFunctionChainsMap. 
-3. Response Sending: If the processing is successful, the registerFunctionChainHandler function sets the HTTP status code to 200 and returns the identifier of the processed result. 
+1. Server Start-Up: In the RegisterFunctionChainController function, a new Gorilla Mux router is created and the registerEchoFunctionChainHandler is registered as the handler for POST requests. An HTTP server is then initiated to listen on a specified port and handle requests with the created router. 
+2. Request Handling: In the registerEchoFunctionChainHandler function, the request body is read and parsed into the RegisterFunctionChainVO structure. The parsed data is then processed by the ParseJsonToMaps function and the results are stored in the global RegisteredFunctionChainsMap. 
+3. Response Sending: If the processing is successful, the registerEchoFunctionChainHandler function sets the HTTP status code to 200 and returns the identifier of the processed result. 
 4. Request Sending: A new POST request is created, with the body being data read from a JSON file. This request is then sent using an HTTP client. 
 5. Response Checking: The status and body of the response are read, and the status is checked to be "200 OK" using the assert function from Testify.
 6. Self-issued certification for https is enabled.

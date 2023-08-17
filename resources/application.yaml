@@ -1,1 +1,3 @@
-port: 8443
+web:
+  framework: echo  # "gorilla" or "echo"
+  port: 8443

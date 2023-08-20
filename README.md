@@ -150,7 +150,7 @@ Response: 200 OK if the input is valid JSON as per our requirements (schema), el
 
 ### How to Run:
 ```shell
-# Make sure port 8080 is available, or modify it in ${APPROOT}/resources/application.yaml
+# Make sure port 8443 is available, or modify it in ${APPROOT}/resources/application.yaml
 cd ${APPROOT}/tests
 ./autoRunRestApiTest.sh
 ```

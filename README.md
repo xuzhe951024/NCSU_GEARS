@@ -9,6 +9,10 @@ Yang: Task 1
 
 Zhe: Task 2
 
+### Project Structure:
+
+![Project_Structure](tests/static/images/ProjectStructure.png)
+
 ### Tasks Description:
 
 Task 1: Parse the input function chain and convert it into the desired format:
@@ -37,10 +41,12 @@ I have attached the relevant code snippet with this email for your reference. Ki
 
 Note that some code has been removed to create this relevant code snippet. So, if any part of the code is unclear, let me know and we can discuss it.
 
+
+## Task: JSON Parse & Warm State Updating
 ### How to Run:
 ```shell
-cd ${APPROOT}
-go run main/main.go
+cd ${APPROOT}/tests
+go test -run TestForTask1And2
 ```
 ### Result & Explanation
 #### Experiment Configurations:
@@ -48,7 +54,26 @@ go run main/main.go
 numParallel: 2
 functionsIter: 0
 ```
-#### Experiment Results:
+#### Experiment Results For JSON Parse:
+Target go entity structure:
+```go
+type Function struct {
+	Name            string
+	Version         string
+	DependsOn       map[string]FunctionIndex
+	Next            map[string]struct{ Name string }
+	Timeout         string
+	IsLast          bool
+	BreakConditions []Condition
+	Data            string
+	IsWarm          bool
+}
+```
+Parsed result:
+
+![ParsedResult](tests/static/images/T1_Result.png)
+
+#### Experiment Results For Warm State Updating:
 ```shell
 === RUN   TestForTask1And2
 time="2023-08-09T00:03:11-04:00" level=info msg="GoRoutineId: 34 function: f8 with parameters: data7 has been well processed"
@@ -95,11 +120,11 @@ PASS
 ```
 #### Explanation
 1. The json strings were mapped to "map[string]models.function" and kept O(1) access to the metadata.
-2. [UPDATED IN V2]"dependsOn" and "next" fields has been modified to "map[string]models.function" to remain O(1) access instead of traversing all the json again.
+2. "dependsOn" and "next" fields has been modified to "map[string]models.function" to remain O(1) access instead of traversing all the json again.
 3. For each call to "ScheduleFunctionOnNode()", the main GoRoutine(GoRoutineId: 1) will wait for the user function GoRoutine and warm state update GoRoutine.
 4. Use mutex lock to remain thread-safe: Could be switched to read-write lock if reading is significantly larger than writing.
-5. [UPDATED IN V2] Add a WarmStateUpdateEventHandler to maintain warm state once a request(event) comes.
-6. [UPDATED IN V2] Update test code to simulate concurrency scenarios.
+5. Add a WarmStateUpdateEventHandler to maintain warm state once a request(event) comes.
+6. Update test code to simulate concurrency scenarios.
 
 ## Task: Rest-api
 

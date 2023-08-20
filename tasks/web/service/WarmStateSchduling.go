@@ -16,7 +16,7 @@ var funcRunStatus = map[string]string{}
 var resultsMap = make(map[string]interface{})
 
 // Maximum number of warm state functions
-var numParallel = 5
+var numParallel = 2
 
 // Warm state functions
 var warmFunctions = []string{}

@@ -20,6 +20,9 @@ const (
 	GORILLA                 = "gorilla"
 	ECHO                    = "echo"
 	CONTANT_TYPE_JSON       = "application/json"
+
+	REQUEST_TIME    = "test.performance.request_time"
+	REQUEST_THREADS = "test.performance.request_threads"
 )
 
 const (

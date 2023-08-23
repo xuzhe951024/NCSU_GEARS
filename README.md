@@ -177,3 +177,55 @@ ok      NCSU_Gears/tests        0.033s
 4. Request Sending: A new POST request is created, with the body being data read from a JSON file. This request is then sent using an HTTP client. 
 5. Response Checking: The status and body of the response are read, and the status is checked to be "200 OK" using the assert function from Testify.
 6. Self-issued certification for https is enabled.
+
+### Performance Tests
+#### Experiment Configurations:
+```yaml
+test:
+  performance:
+    request_time: 100
+    request_threads: 100
+```
+
+### How to Run:
+```shell
+# Make sure port 8443 is available, or modify it in ${APPROOT}/resources/application.yaml
+cd ${APPROOT}/tests
+./autoRunRestApiTest.sh
+```
+
+### Test environment:
+```yaml
+CPU: AMD Ryzen 7 6800H with Radeon Graphics
+  - 1 physical CPU package(s)
+  - 8 physical CPU core(s)
+  - 16 logical CPU(s)
+Identifier: AuthenticAMD Family 25 Model 68 Stepping 1
+Microarchitecture: Zen 3
+Available cores: 16
+Total Memory: 13434
+Operating System: Linux DESKTOP-LUP6PO5 5.15.90.1-microsoft-standard-WSL2
+```
+
+#### Experiment Results:
+##### Echo
+Average response time: 247 ms
+Resource usage:
+![EchoUsage.png](tests%2Fstatic%2Fimages%2FEchoUsage.png)![]
+CPU usage detail:
+![EchoCPU.png](tests%2Fstatic%2Fimages%2FEchoCPU.png)
+Memory usage detail:
+![EchoMem.png](tests%2Fstatic%2Fimages%2FEchoMem.png)
+##### Gorilla/Mux
+Average response time: 245 ms
+Resource usage:
+![GorillaUsage.png](tests%2Fstatic%2Fimages%2FGorillaUsage.png)
+CPU usage detail:
+![GorillaCPU.png](tests%2Fstatic%2Fimages%2FGorillaCPU.png)
+Memory usage detail:
+![GorillaMem.png](tests%2Fstatic%2Fimages%2FGorillaMem.png)
+
+#### Explanation
+This performance test is based on FunctionChainRegistration's REST-API (self-signed HTTPS), with a request body type of application/json. The web framework type can be modified in ${APPROOT/resources/application.yaml}. The test code will simulate 100 consecutive requests from 100 users after the web service is started (the total number of requests is 10, 000, this configuration can also be modified in ${APPROOT/resources/application.yaml})
+
+From the results, there is no significant difference between the two web frameworks (Gorilla/mux and Echo) in the current test scenario: the average response time, CUP usage and memory usage are all in the same order of magnitude. However, it is worth noting that the Gorilla/mux framework has a significantly lower footprint for web service-related code than Echo. Based on the above results and the official documentation, we believe that Echo contains more features and is more suitable for complete product-level services, while Gorilla/mux is lighter, and in the experimental stage, it is fully capable of carrying simple routing and web proxy functions.

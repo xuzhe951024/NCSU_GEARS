@@ -6,13 +6,15 @@ import (
 	"NCSU_Gears/tasks/web/service"
 	"encoding/json"
 	"github.com/gorilla/mux"
+	echopprof "github.com/labstack/echo-contrib/pprof"
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
+	_ "net/http/pprof"
 )
 
-var RegisteredFunctionChainsMap map[string]map[string]models.Function
+var RegisteredFunctionChainsMap = models.NewThreadSafeMap()
 
 func registerGorillaFunctionChainHandler(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)
@@ -33,13 +35,7 @@ func registerGorillaFunctionChainHandler(w http.ResponseWriter, r *http.Request)
 
 	fnMappings, funcs := service.ParseJsonToMaps(result)
 
-	if nil == RegisteredFunctionChainsMap {
-		initMap := make(map[string]map[string]models.Function)
-		initMap[result.Identifier] = fnMappings
-		RegisteredFunctionChainsMap = initMap
-	} else {
-		RegisteredFunctionChainsMap[result.Identifier] = fnMappings
-	}
+	RegisteredFunctionChainsMap.SetThreadSafeMap(result.Identifier, fnMappings)
 
 	if nil != fnMappings && nil != funcs {
 		w.WriteHeader(http.StatusOK)
@@ -50,6 +46,7 @@ func registerGorillaFunctionChainHandler(w http.ResponseWriter, r *http.Request)
 
 func RegisterGorillaFunctionChainController(port string) {
 	router := mux.NewRouter()
+	router.PathPrefix("/debug/pprof/").Handler(http.DefaultServeMux)
 	router.HandleFunc(constants.URI_V1_REGISTER_FUNCTION_CHAIN, registerGorillaFunctionChainHandler).Methods(constants.REQUEST_METHOD_POST)
 	logrus.Info("starting serving on port: " + port)
 	//err := http.ListenAndServe(port, router)
@@ -77,13 +74,7 @@ func registerEchoFunctionChainHandler(c echo.Context) error {
 
 	fnMappings, funcs := service.ParseJsonToMaps(result)
 
-	if nil == RegisteredFunctionChainsMap {
-		initMap := make(map[string]map[string]models.Function)
-		initMap[result.Identifier] = fnMappings
-		RegisteredFunctionChainsMap = initMap
-	} else {
-		RegisteredFunctionChainsMap[result.Identifier] = fnMappings
-	}
+	RegisteredFunctionChainsMap.SetThreadSafeMap(result.Identifier, fnMappings)
 
 	if nil != fnMappings && nil != funcs {
 		response, _ := json.Marshal(result.Identifier)
@@ -95,6 +86,7 @@ func registerEchoFunctionChainHandler(c echo.Context) error {
 func RegisterEchoFunctionChainController(port string) {
 	e := echo.New()
 
+	echopprof.Register(e)
 	e.POST(constants.URI_V1_REGISTER_FUNCTION_CHAIN, registerEchoFunctionChainHandler)
 
 	logrus.Info("starting serving on port: " + port)

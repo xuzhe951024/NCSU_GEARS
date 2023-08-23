@@ -1,3 +1,7 @@
 web:
-  framework: echo  # "gorilla" or "echo"
+  framework: gorilla  # "gorilla" or "echo"
   port: 8443
+test:
+  performance:
+    request_time: 100
+    request_threads: 100

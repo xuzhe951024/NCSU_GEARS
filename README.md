@@ -211,7 +211,7 @@ Operating System: Linux DESKTOP-LUP6PO5 5.15.90.1-microsoft-standard-WSL2
 ##### Echo
 Average response time: 247 ms
 Resource usage:
-![EchoUsage.png](tests%2Fstatic%2Fimages%2FEchoUsage.png)![]
+![EchoUsage.png](tests%2Fstatic%2Fimages%2FEchoUsage.png)
 CPU usage detail:
 ![EchoCPU.png](tests%2Fstatic%2Fimages%2FEchoCPU.png)
 Memory usage detail:
